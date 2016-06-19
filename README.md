@@ -16,3 +16,5 @@ http://www.carqueryapi.com/api/0.3/?cmd=getTrims&make=dacia&year=2011&model=Sand
 
 http://www.carqueryapi.com/api/0.3/?&cmd=getModel&model=11459
 
+### Roadman
+[ ] set up gae for proxy.php
