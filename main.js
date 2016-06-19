@@ -30,14 +30,116 @@ Vue.component('tasks', {
 
 new Vue({
     el: '#app',
-    
+
     data: {
-        tasks: [ 
-            { body: 'Go to the store', completed: false },
-            { body: 'Go to the bank', completed: false },
-            { body: 'Go to the doctor', completed: true }
-        ]    
+        year: '',
+        years: [],
+        make: '',
+        makes: [],
+        model: '',
+        models: [],
+        trim: '',
+        trims: [],
+        data:{}
     },
+    created: function () {
+        this.fetchYearList();
+    },
+
+    watch: {
+        'year': function (val, oldVal) {
+            // console.log('new: %s, old: %s', val, oldVal);
+            this.fetchMakeList()
+        },
+        'make': function (val, oldVal) {
+            // console.log('new: %s, old: %s', val, oldVal);
+            this.fetchModelList()
+        },
+        'model': function (val, oldVal) {
+            // console.log('new: %s, old: %s', val, oldVal);
+            this.fetchTrimList()
+        },
+        'trim': function (val, oldVal) {
+            // console.log('new: %s, old: %s', val, oldVal);
+            this.fetchData()
+        }
+    },
+
+    methods: {
+        fetchYearList: function () {
+            // GET /someUrl
+            this.$http.get('http://vuejs-cascading-select.dev/proxy.php?call=www.carqueryapi.com/api/0.3/?cmd=getYears').then((response) => {
+                // console.log(response.data);
+            for(i = response.data.Years.max_year; i>=response.data.Years.min_year; i--) {
+                this.years.push({ text: i, value: i });
+            }
+
+                // success callback
+            }, (response) => {
+                // error callback
+            });
+        },
+        fetchMakeList: function () {
+            // GET /someUrl
+            var uri = encodeURIComponent('www.carqueryapi.com/api/0.3/?cmd=getMakes&year=' + this.year);
+            this.$http.get('http://vuejs-cascading-select.dev/proxy.php?call=' + uri).then((response) => {
+            for(i in response.data.Makes) {
+                var el = response.data.Makes[i];
+                // console.log(el);
+                this.makes.push({ text: el.make_display, value: el.make_id });
+            }
+
+                // success callback
+            }, (response) => {
+                // error callback
+            });
+        },
+        fetchModelList: function () {
+            // GET /someUrl
+            var uri = encodeURIComponent('www.carqueryapi.com/api/0.3/?cmd=getModels&make=' + this.make + '&year=' + this.year);
+            this.$http.get('http://vuejs-cascading-select.dev/proxy.php?call=' + uri).then((response) => {
+            for(i in response.data.Models) {
+                var el = response.data.Models[i];
+                this.models.push({ text: el.model_name, value: el.model_name });
+            }
+
+                // success callback
+            }, (response) => {
+                // error callback
+            });
+        },
+        fetchTrimList: function () {
+            // GET /someUrl
+            var uri = encodeURIComponent('www.carqueryapi.com/api/0.3/?cmd=getTrims&model=' + this.model + '&make=' + this.make + '&year=' + this.year);
+            this.$http.get('http://vuejs-cascading-select.dev/proxy.php?call=' + uri).then((response) => {
+            for(i in response.data.Trims) {
+                var el = response.data.Trims[i];
+                this.trims.push({ text: el.model_trim, value: el.model_id });
+            }
+
+                // success callback
+            }, (response) => {
+                // error callback
+            });
+        },
+        fetchData: function () {
+            // GET /someUrl
+            var uri = encodeURIComponent('www.carqueryapi.com/api/0.3/?cmd=getModel&model=' + this.trim);
+            this.$http.get('http://vuejs-cascading-select.dev/proxy.php?call=' + uri).then((response) => {
+            console.log(response.data);
+            this.data = response.data[0];
+
+            // for(i in response.data.Trims) {
+            //     var el = response.data.Trims[i];
+            //     this.trims.push({ text: el.model_trim, value: el.model_id });
+            // }
+
+                // success callback
+            }, (response) => {
+                // error callback
+            });
+        }
+    }
 
 
 })
