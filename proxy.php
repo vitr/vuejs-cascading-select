@@ -9,4 +9,4 @@ header('Access-Control-Allow-Origin: *');
 
 
 //echo 'http://'.$_GET['call'];
-echo file_get_contents(urldecode('http://'.$_GET['call']));
+echo file_get_contents(urldecode('http://www.carqueryapi.com/api/0.3/'.$_GET['call']));

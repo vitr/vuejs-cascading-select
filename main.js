@@ -28,6 +28,8 @@ Vue.component('tasks', {
     }
 });
 
+var proxyUrl = 'http://ec2-54-172-70-62.compute-1.amazonaws.com/proxy/proxy.php';
+
 new Vue({
     el: '#app',
 
@@ -68,7 +70,7 @@ new Vue({
     methods: {
         fetchYearList: function () {
             // GET /someUrl
-            this.$http.get('http://vuejs-cascading-select.dev/proxy.php?call=www.carqueryapi.com/api/0.3/?cmd=getYears').then((response) => {
+            this.$http.get(proxyUrl + '?call=?cmd=getYears').then((response) => {
                 // console.log(response.data);
             for(i = response.data.Years.max_year; i>=response.data.Years.min_year; i--) {
                 this.years.push({ text: i, value: i });
@@ -81,8 +83,8 @@ new Vue({
         },
         fetchMakeList: function () {
             // GET /someUrl
-            var uri = encodeURIComponent('www.carqueryapi.com/api/0.3/?cmd=getMakes&year=' + this.year);
-            this.$http.get('http://vuejs-cascading-select.dev/proxy.php?call=' + uri).then((response) => {
+            var uri = encodeURIComponent('?cmd=getMakes&year=' + this.year);
+            this.$http.get(proxyUrl + '?call=' + uri).then((response) => {
             for(i in response.data.Makes) {
                 var el = response.data.Makes[i];
                 // console.log(el);
@@ -96,8 +98,8 @@ new Vue({
         },
         fetchModelList: function () {
             // GET /someUrl
-            var uri = encodeURIComponent('www.carqueryapi.com/api/0.3/?cmd=getModels&make=' + this.make + '&year=' + this.year);
-            this.$http.get('http://vuejs-cascading-select.dev/proxy.php?call=' + uri).then((response) => {
+            var uri = encodeURIComponent('?cmd=getModels&make=' + this.make + '&year=' + this.year);
+            this.$http.get(proxyUrl + '?call=' + uri).then((response) => {
             for(i in response.data.Models) {
                 var el = response.data.Models[i];
                 this.models.push({ text: el.model_name, value: el.model_name });
@@ -110,8 +112,8 @@ new Vue({
         },
         fetchTrimList: function () {
             // GET /someUrl
-            var uri = encodeURIComponent('www.carqueryapi.com/api/0.3/?cmd=getTrims&model=' + this.model + '&make=' + this.make + '&year=' + this.year);
-            this.$http.get('http://vuejs-cascading-select.dev/proxy.php?call=' + uri).then((response) => {
+            var uri = encodeURIComponent('?cmd=getTrims&model=' + this.model + '&make=' + this.make + '&year=' + this.year);
+            this.$http.get(proxyUrl + '?call=' + uri).then((response) => {
             for(i in response.data.Trims) {
                 var el = response.data.Trims[i];
                 this.trims.push({ text: el.model_trim, value: el.model_id });
@@ -124,8 +126,8 @@ new Vue({
         },
         fetchData: function () {
             // GET /someUrl
-            var uri = encodeURIComponent('www.carqueryapi.com/api/0.3/?cmd=getModel&model=' + this.trim);
-            this.$http.get('http://vuejs-cascading-select.dev/proxy.php?call=' + uri).then((response) => {
+            var uri = encodeURIComponent('?cmd=getModel&model=' + this.trim);
+            this.$http.get(proxyUrl + '?call=' + uri).then((response) => {
             console.log(response.data);
             this.data = response.data[0];
 
