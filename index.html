@@ -2,16 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Lesson: Rendering and Working with lists</title>
+    <title>Vue.js Cascading Select Boxes Example</title>
     <style>
         .completed { text-decoration: line-through; }
+        [v-cloak] {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
-    <div id="app">
+    <div id="app" v-cloak>
 
-        <tasks :list="tasks"></tasks>
+        year
+        <select v-model="year">
+            <option v-for="option in years" v-bind:value="option.value">
+                {{ option.text }}
+            </option>
+        </select>
+        <span>Selected: {{ year }}</span>
+
+        make
+        <select v-model="make">
+            <option v-for="option in makes" v-bind:value="option.value">
+                {{ option.text }}
+            </option>
+        </select>
+        <span>Selected: {{ make }}</span>
+
+        model
+        <select v-model="model">
+            <option v-for="option in models" v-bind:value="option.value">
+                {{ option.text }}
+            </option>
+        </select>
+        <span>Selected: {{ model }}</span>
+
+        trim
+        <select v-model="trim">
+            <option v-for="option in trims" v-bind:value="option.value">
+                {{ option.text }}
+            </option>
+        </select>
+        <span>Selected: {{ trim }}</span>
+
+        <pre>
+            {{ $data.data | json }}
+        </pre>
 
     </div>
 
@@ -37,6 +74,8 @@
     </template>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.24/vue.js"></script>
+    <!--<script src="https://vuejs.org/js/vue.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.7.4/vue-resource.js"></script>
 
     <script src="main.js"></script>
 
