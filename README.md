@@ -1,6 +1,8 @@
 # Vue.js Api Example
 
-working demo https://vitr.github.io/vuejs-cascading-select/
+working demo http://vitr.github.io/vuejs-cascading-select/
+
+~~https://vitr.github.io/vuejs-cascading-select/~~
 
 We could use this freely available api for car data 
 http://www.carqueryapi.com/demo/dependent-selects/
