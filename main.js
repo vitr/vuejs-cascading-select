@@ -28,7 +28,7 @@ Vue.component('tasks', {
     }
 });
 
-var proxyUrl = 'http://vuejs-cascading-select.epizy.com/proxy.php';
+var proxyUrl = 'https://vuejs-cascading-select.appspot.com/proxy.php';
 
 new Vue({
     el: '#app',
